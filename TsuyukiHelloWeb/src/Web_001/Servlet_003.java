@@ -3,6 +3,7 @@ package Web_001;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,16 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet_001
+ * Servlet implementation class Servlet_003
  */
-@WebServlet("/Web_001/Servlet_001")
-public class Servlet_001 extends HttpServlet {
+@WebServlet("/Web_001/Servlet_003")
+public class Servlet_003 extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public Servlet_001() {
+  public Servlet_003() {
     super();
     // TODO Auto-generated constructor stub
   }
@@ -43,17 +44,7 @@ public class Servlet_001 extends HttpServlet {
 
     String param1 = request.getParameter( "param1" );
     String param2 = request.getParameter( "param2" );
-    // pw.println( param1 );
-    // pw.println( param2 );
-
-    int n = Integer.parseInt( param2 );
-    String out1 = "";
-
-    for ( int i = 0; i < n; i++ ) {
-
-      out1 = param1 + out1;
-
-    }
+    String param3 = request.getParameter( "param3" );
 
     pw.println( "<html>" );
     pw.println( "<head>" );
@@ -61,10 +52,53 @@ public class Servlet_001 extends HttpServlet {
     pw.println( "</head>" );
     pw.println( "<body>" );
 
-    // 入力値を標準出力する
-    // pw.println(param1);
-    // pw.println(param2);
-    pw.println( out1 );
+    if ( ( param1.equals( "" ) ) || ( param2.equals( "" ) ) || ( param3.equals( "" ) ) ) {
+
+      pw.println( "不正な値が入力されました。" );
+
+    } else {
+      if ( ( param2.equals( "+" ) || param2.equals( "-" ) || param2.equals( "*" )
+      || param2.equals( "/" ) ) ) {
+
+        BigDecimal wk1 = new BigDecimal( param1 );
+        BigDecimal wk3 = new BigDecimal( param3 );
+
+        if ( (wk3.signum() == 0) && (param2.equals( "/" ))) {
+
+          pw.println( "不正な値が入力されました。" );
+
+        } else {
+
+          BigDecimal out1 = null;
+
+          switch ( param2 ) {
+            case "+":
+              out1 = wk1.add( wk3 );
+              break;
+
+            case "-":
+              out1 = wk1.subtract( wk3 );
+              break;
+
+            case "*":
+              out1 = wk1.multiply( wk3 );
+              break;
+
+            case "/":
+              out1 = wk1.divide( wk3, 5, BigDecimal.ROUND_HALF_UP );
+              break;
+          }
+
+          pw.println( param1 );
+          pw.println( param2 );
+          pw.println( param3 );
+          pw.println( "=" + out1 );
+
+        }
+      } else {
+        pw.println( "不正な値が入力されました。" );
+      }
+    }
 
     pw.println( "</body>" );
     pw.println( "</html>" );

@@ -11,16 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class Servlet_001
+ * Servlet implementation class Servlet_002
  */
-@WebServlet("/Web_001/Servlet_001")
-public class Servlet_001 extends HttpServlet {
+@WebServlet("/Web_001/Servlet_002")
+public class Servlet_002 extends HttpServlet {
   private static final long serialVersionUID = 1L;
 
   /**
    * @see HttpServlet#HttpServlet()
    */
-  public Servlet_001() {
+  public Servlet_002() {
     super();
     // TODO Auto-generated constructor stub
   }
@@ -42,18 +42,6 @@ public class Servlet_001 extends HttpServlet {
     PrintWriter pw = response.getWriter();
 
     String param1 = request.getParameter( "param1" );
-    String param2 = request.getParameter( "param2" );
-    // pw.println( param1 );
-    // pw.println( param2 );
-
-    int n = Integer.parseInt( param2 );
-    String out1 = "";
-
-    for ( int i = 0; i < n; i++ ) {
-
-      out1 = param1 + out1;
-
-    }
 
     pw.println( "<html>" );
     pw.println( "<head>" );
@@ -61,10 +49,26 @@ public class Servlet_001 extends HttpServlet {
     pw.println( "</head>" );
     pw.println( "<body>" );
 
-    // 入力値を標準出力する
-    // pw.println(param1);
-    // pw.println(param2);
-    pw.println( out1 );
+    // カンマ切り出し
+    String[] high1 = param1.split( ",", 0 );
+
+    int n = high1.length;
+    int high2 = 0;
+    double weight1;
+
+    // 身長と体重を割り出す
+    for ( int i = 0; i < n; i++ ) {
+
+      // 身長数値変換
+      high2 = Integer.parseInt( high1[i] );
+      // 体重算出
+      weight1 = ( high2 - 100 ) * 0.9;
+      String weight2 = String.format("%.5f", weight1);
+      // 出力
+      pw.print( "身長:" + high2 );
+      pw.print( "  体重:" + weight2 );
+      pw.print( "<br>" );
+    }
 
     pw.println( "</body>" );
     pw.println( "</html>" );
